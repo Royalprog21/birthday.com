@@ -390,6 +390,167 @@ canvas#confetti-canvas {
 .reveal .bday-message {
   opacity: 1; transform: translateY(0);
 }
+
+/* ══════════════ COMMENT SECTION ══════════════ */
+#comment-section {
+  position: relative;
+  min-height: 70vh;
+  padding: 72px 24px 90px;
+  background:
+    radial-gradient(circle at 10% 15%, rgba(201,168,76,0.14), transparent 45%),
+    radial-gradient(circle at 90% 82%, rgba(232,196,184,0.16), transparent 50%),
+    #120a07;
+  color: var(--cream);
+}
+
+#comment-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.comment-shell {
+  position: relative;
+  z-index: 1;
+  width: min(760px, 100%);
+  margin: 0 auto;
+  padding: 36px;
+  border: 1px solid rgba(201,168,76,0.35);
+  border-radius: 22px;
+  background: rgba(12, 6, 5, 0.76);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+}
+
+.comment-kicker {
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.comment-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.7rem, 4vw, 2.5rem);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.comment-note {
+  color: rgba(245,239,230,0.72);
+  margin-bottom: 22px;
+}
+
+.comment-form {
+  display: grid;
+  gap: 14px;
+}
+
+.comment-field {
+  display: grid;
+  gap: 6px;
+}
+
+.comment-field label {
+  font-size: 0.95rem;
+  color: rgba(245,239,230,0.88);
+}
+
+.comment-field input,
+.comment-field textarea {
+  width: 100%;
+  border: 1px solid rgba(201,168,76,0.35);
+  background: rgba(245,239,230,0.06);
+  color: var(--cream);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font: inherit;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.comment-field input:focus,
+.comment-field textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.2);
+}
+
+.comment-field textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+
+.comment-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.comment-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.comment-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+.comment-btn--email {
+  background: var(--gold);
+  color: #1b120b;
+}
+
+.comment-btn--whatsapp {
+  background: #22c35e;
+  color: #062911;
+}
+
+.comment-feedback {
+  min-height: 1.2em;
+  color: rgba(245,239,230,0.82);
+  font-size: 0.95rem;
+}
+
+.comment-links {
+  margin-top: 6px;
+  color: rgba(245,239,230,0.72);
+  font-size: 0.96rem;
+}
+
+.comment-links a {
+  color: var(--gold);
+}
+
+@media (max-width: 640px) {
+  #comment-section {
+    padding: 58px 16px 72px;
+  }
+
+  .comment-shell {
+    padding: 24px 16px;
+  }
+
+  .comment-actions {
+    flex-direction: column;
+  }
+
+  .comment-btn {
+    width: 100%;
+  }
+}
 </style>
 </head>
 <body>
@@ -433,6 +594,37 @@ canvas#confetti-canvas {
     <p class="bday-subtitle">to you, to this moment, to everything ahead</p>
     <div class="bday-divider"></div>
     <p class="bday-message">Looking back, it was worth the price —<br>to more life and grace 🎉.</p>
+  </div>
+</section>
+
+<section id="comment-section">
+  <div class="comment-shell">
+    <p class="comment-kicker">Leave a Message</p>
+    <h2 class="comment-title">Send a Birthday Comment</h2>
+    <p class="comment-note">People can write a message here and send it directly to your email or WhatsApp.</p>
+
+    <form id="comment-form" class="comment-form">
+      <div class="comment-field">
+        <label for="comment-name">Your Name</label>
+        <input type="text" id="comment-name" maxlength="80" placeholder="Enter your name" required />
+      </div>
+
+      <div class="comment-field">
+        <label for="comment-message">Comment</label>
+        <textarea id="comment-message" maxlength="1000" placeholder="Write your birthday message here" required></textarea>
+      </div>
+
+      <div class="comment-actions">
+        <button type="submit" id="send-email-btn" class="comment-btn comment-btn--email">Send to Email</button>
+        <button type="button" id="send-whatsapp-btn" class="comment-btn comment-btn--whatsapp">Send to WhatsApp</button>
+      </div>
+
+      <p id="comment-feedback" class="comment-feedback" aria-live="polite"></p>
+      <p class="comment-links">
+        Email: <a href="mailto:peteronyangoroyalty@gmail.com">peteronyangoroyalty@gmail.com</a><br>
+        WhatsApp: <a href="https://wa.me/254769700303" target="_blank" rel="noopener">+254 769 700 303</a>
+      </p>
+    </form>
   </div>
 </section>
 
@@ -501,6 +693,52 @@ function launchConfetti() {
     if (alive) requestAnimationFrame(draw);
   })();
 }
+
+const ownerEmail = 'peteronyangoroyalty@gmail.com';
+const ownerWhatsapp = '254769700303';
+
+const commentForm = document.getElementById('comment-form');
+const commentName = document.getElementById('comment-name');
+const commentMessage = document.getElementById('comment-message');
+const sendWhatsappBtn = document.getElementById('send-whatsapp-btn');
+const feedback = document.getElementById('comment-feedback');
+
+function getCommentPayload() {
+  const name = commentName.value.trim();
+  const message = commentMessage.value.trim();
+
+  if (!name || !message) {
+    feedback.textContent = 'Please enter your name and a comment first.';
+    return null;
+  }
+
+  return { name, message };
+}
+
+function buildCommentText(payload) {
+  return 'Birthday comment from ' + payload.name + ':\n\n' + payload.message;
+}
+
+commentForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+  const payload = getCommentPayload();
+  if (!payload) return;
+
+  const subject = encodeURIComponent('Birthday Comment from ' + payload.name);
+  const body = encodeURIComponent(buildCommentText(payload));
+  window.location.href = 'mailto:' + ownerEmail + '?subject=' + subject + '&body=' + body;
+  feedback.textContent = 'Opening your email app...';
+});
+
+sendWhatsappBtn.addEventListener('click', function () {
+  const payload = getCommentPayload();
+  if (!payload) return;
+
+  const text = encodeURIComponent(buildCommentText(payload));
+  const phone = ownerWhatsapp.replace(/\D/g, '');
+  window.open('https://wa.me/' + phone + '?text=' + text, '_blank', 'noopener');
+  feedback.textContent = 'Opening WhatsApp...';
+});
 </script>
 </body>
 </html>
